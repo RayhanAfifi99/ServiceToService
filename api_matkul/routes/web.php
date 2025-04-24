@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MatkulController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/matkuls/api', [MatkulController::class, 'index']);
+
+Route::get('/matkuls', [MatkulController::class, 'viewIndex'])->name('matkuls.index');
+
+
+

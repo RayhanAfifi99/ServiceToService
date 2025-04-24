@@ -98,4 +98,10 @@ class StudentController extends Controller
             'message' => 'Student deleted successfully.'
         ]);
     }
+
+    public function viewIndex()
+    {
+        $students = Student::all();
+        return view('students.index', compact('students'));
+    }
 }

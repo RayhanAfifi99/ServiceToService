@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('api/students', StudentController::class);
 
+Route::get('/students', [StudentController::class, 'viewIndex'])->name('students.index');
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
