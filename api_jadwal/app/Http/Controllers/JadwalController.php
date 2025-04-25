@@ -92,14 +92,14 @@ class JadwalController extends Controller
 
     public function showJadwalUI(string $nim, string $day)
     {
-        // 1. Mendapatkan data mahasiswa berdasarkan NIM
+        
         $studentRes = Http::timeout(15)
             ->get(env('STUDENT_SERVICE_URL') . "/{$nim}")
-            ->throw();   // Fail-fast untuk 4xx/5xx
+            ->throw();   
 
         $student = $studentRes->json();
 
-        // 2. Validasi hari yang diminta
+        
         $validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         if (! in_array($day, $validDays)) {
             return view('jadwal_student', [
@@ -107,7 +107,7 @@ class JadwalController extends Controller
             ]);
         }
 
-        // 3. Mengambil jadwal mata kuliah berdasarkan prodi dan hari
+        
         $matkulRes = Http::timeout(5)
             ->get(env('MATKUL_SERVICE_URL'), [
                 'prodi' => $student['data']['prodi'],
@@ -116,7 +116,6 @@ class JadwalController extends Controller
 
         $matkuls = $matkulRes->json();
 
-        // 4. Menampilkan data ke view
         return view('jadwal_student', [
             'student' => $student,
             'jadwal'  => $matkuls,

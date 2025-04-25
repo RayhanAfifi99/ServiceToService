@@ -19,8 +19,6 @@ class MatkulController extends Controller
 
     public function index(Request $request)
     {
-        // 1. Adjust validation: both fields are optional,
-        //    but if present, must be correctly formatted.
         $validated = $request->validate([
             'prodi' => ['sometimes', 'string'],
             'day'   => ['sometimes', Rule::in([
@@ -34,10 +32,8 @@ class MatkulController extends Controller
             ])],
         ]);
 
-        // 2. Start a query builder instance
         $query = Matkul::query();
 
-        // Apply filters if provided
         if ($request->filled('prodi')) {
             $query->where('prodi', $validated['prodi']);
         }
@@ -45,7 +41,6 @@ class MatkulController extends Controller
             $query->where('day',   $validated['day']);
         }
 
-        // If no filters show all
 
         $matkuls = $query->get();
         return response()->json($matkuls);
@@ -99,7 +94,6 @@ class MatkulController extends Controller
         //
     }
 
-    // app/Http/Controllers/MatkulController.php
     public function viewIndex()
     {
         $matkuls = Matkul::all();
